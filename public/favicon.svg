@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#0B0F19"/>
+  <!-- Diamond kite shape -->
+  <polygon points="16,4 26,16 16,28 6,16" fill="#F59E0B" fill-opacity="0.9"/>
+  <!-- Cross spar & backbone -->
+  <line x1="16" y1="4" x2="16" y2="28" stroke="#111827" stroke-width="1.2"/>
+  <path d="M6 16 Q16 13 26 16" stroke="#111827" stroke-width="1.2" fill="none"/>
+  <!-- Subtle tail -->
+  <polygon points="16,28 13,31 19,31" fill="#F59E0B"/>
+</svg>

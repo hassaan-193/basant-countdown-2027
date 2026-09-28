@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Basant 2027 Design System - Electric Royal Twilight & Golden Amber
+   A vibrant, modern, high-end cultural festival palette
+   ========================================================================== */
+
+:root {
+  /* Rich Radiant Gold & Sunset Fire */
+  --color-gold-light: #FFF59D;
+  --color-primary: #F59E0B;
+  --color-primary-light: #FBBF24;
+  --color-primary-dark: #D97706;
+  --color-sunset-orange: #FB923C;
+  --color-sunset-rose: #F43F5E;
+
+  /* Multi-stop Festival Sunset Gradients */
+  --grad-festival-fire: linear-gradient(135deg, #FFF59D 0%, #FBBF24 25%, #F59E0B 50%, #FB923C 75%, #F43F5E 100%);
+  --grad-gold-metal: linear-gradient(180deg, #FFFFFF 20%, #FDE047 70%, #F59E0B 100%);
+  --grad-glass-surface: linear-gradient(165deg, rgba(255, 255, 255, 0.09) 0%, rgba(25, 14, 42, 0.65) 45%, rgba(12, 6, 24, 0.82) 100%);
+  --grad-glass-card: linear-gradient(180deg, rgba(48, 24, 78, 0.55) 0%, rgba(20, 9, 36, 0.72) 100%);
+  --grad-progress-glow: linear-gradient(90deg, #E11D48 0%, #F97316 35%, #FBBF24 75%, #FFF59D 100%);
+
+  /* Deep Celestial Twilight & Velvet Indigo */
+  --bg-base: #080314;
+  --bg-surface: rgba(18, 10, 32, 0.82);
+  --bg-card: rgba(30, 16, 52, 0.7);
+
+  /* Typography Colors */
+  --text-main: #FFFFFF;
+  --text-muted: #CBD5E1;
+  --text-subtle: #94A3B8;
+  --text-gold: #FDE047;
+
+  /* Borders & Glows */
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(251, 191, 36, 0.38);
+  --border-gold-glow: rgba(245, 158, 11, 0.6);
+
+  /* Fonts */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 18px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Modern CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--text-muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 4vw, 32px);
+  padding-right: clamp(16px, 4vw, 32px);
+}
+
+.section-spacing {
+  padding-top: clamp(48px, 7vw, 84px);
+  padding-bottom: clamp(48px, 7vw, 84px);
+}
+
+/* Section Header Utility */
+.section-header-centered {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(24px, 4vw, 40px) auto;
+}
+
+.section-title {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 800;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.title-gradient {
+  background: var(--grad-festival-fire);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  filter: drop-shadow(0 2px 16px rgba(245, 158, 11, 0.45));
+}
+
+.section-description {
+  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid var(--border-glass);
+  color: var(--color-primary-light);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary);
+}
+
+/* Accessibility Focus Ring */
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

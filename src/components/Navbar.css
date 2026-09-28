@@ -1,0 +1,130 @@
+/* Navbar Styles */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  transition: all var(--transition-normal);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: var(--space-md);
+}
+
+/* Brand */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-kite-icon {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
+  transition: transform var(--transition-normal);
+}
+
+.header-brand:hover .brand-kite-icon {
+  transform: rotate(-10deg) scale(1.05);
+}
+
+.brand-text {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1875rem;
+  letter-spacing: 0.08em;
+  color: #FFFFFF;
+}
+
+.brand-year {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1875rem;
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+/* Header Right Strip */
+.header-right-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Lahore Live Clock */
+.lahore-clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.clock-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.clock-city {
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.clock-time {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary-light);
+  font-weight: 600;
+}
+
+/* Sound Toggle Button */
+.sound-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #FBBF24;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sound-toggle-btn:hover {
+  background: var(--color-primary);
+  color: #0B0F19;
+}
+
+.sound-btn-text {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .sound-btn-text {
+    display: inline;
+  }
+}
