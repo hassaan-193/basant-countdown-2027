@@ -154,7 +154,7 @@ export function HeroCountdown() {
           <div className="strip-separator">&bull;</div>
           <div className="event-strip-item">
             <span className="strip-icon">📍</span>
-            <span><strong>Venue:</strong> Walled City Lahore (Androon Shehr)</span>
+            <span><strong>Venue:</strong> Ghaziabad, Lahore</span>
           </div>
         </div>
 

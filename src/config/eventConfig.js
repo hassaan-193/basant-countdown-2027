@@ -13,7 +13,8 @@ export const EVENT_CONFIG = {
 
   title: "Basant 2027",
   subtitle: "The Historic Festival of Spring & Kite Flying",
-  location: "Lahore, Punjab, Pakistan",
+  venue: "Ghaziabad, Lahore",
+  location: "Ghaziabad, Lahore, Punjab, Pakistan",
   timezoneName: "Asia/Karachi (PKT UTC+5)",
   
   displayDate: "Thursday, March 11, 2027",

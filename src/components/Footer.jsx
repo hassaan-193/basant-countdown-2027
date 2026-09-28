@@ -50,7 +50,7 @@ export function Footer() {
               <strong>Time:</strong> {EVENT_CONFIG.displayTime}
             </p>
             <p className="footer-spec-item">
-              <strong>Location:</strong> Lahore Rooftops, Pakistan
+              <strong>Location:</strong> Ghaziabad, Lahore, Pakistan
             </p>
             <p className="footer-spec-item">
               <strong>Zone:</strong> {EVENT_CONFIG.timezoneName}
