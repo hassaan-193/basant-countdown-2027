@@ -51,7 +51,7 @@ export function Navbar() {
           <div className="lahore-clock" title="Current Time in Lahore, Pakistan (PKT)">
             <span className="clock-pulse"></span>
             <span className="clock-city">Lahore</span>
-            <span className="clock-time">{lahoreTime || "Loading..."}</span>
+            <span className="clock-time nowrap-text">{lahoreTime || "Loading..."}</span>
           </div>
 
           <button

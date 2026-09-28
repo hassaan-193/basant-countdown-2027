@@ -47,51 +47,112 @@
   pointer-events: none;
 }
 
-/* Bo Kata Popup Banner */
-.sky-bo-kata-banner {
+/* Perfectly Centered Bo Kata Celebratory Modal */
+.sky-bo-kata-overlay {
   position: fixed;
-  top: 22%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+  padding: 16px;
+  background: radial-gradient(circle at center, rgba(14, 6, 26, 0.45) 0%, transparent 75%);
+  animation: boKataOverlayFade 2.2s ease forwards;
+}
+
+@keyframes boKataOverlayFade {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.sky-bo-kata-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px 38px;
-  background: rgba(18, 8, 32, 0.96);
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+  margin: auto;
+  padding: clamp(20px, 5vw, 30px) clamp(16px, 4vw, 24px);
+  background: linear-gradient(165deg, rgba(38, 16, 62, 0.96) 0%, rgba(16, 6, 28, 0.98) 100%);
   border: 2px solid #F59E0B;
-  border-radius: 16px;
-  box-shadow: 0 0 45px rgba(245, 158, 11, 0.85), 0 10px 30px rgba(0, 0, 0, 0.85);
-  pointer-events: none;
-  z-index: 200;
-  animation: boKataPop 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 28px;
+  box-shadow: 
+    0 0 50px rgba(245, 158, 11, 0.7),
+    0 25px 65px rgba(0, 0, 0, 0.95),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  animation: boKataCardSpring 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  box-sizing: border-box;
 }
 
-@keyframes boKataPop {
-  0% { opacity: 0; transform: translate(-50%, -40%) scale(0.6); }
-  15% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-  30% { transform: translate(-50%, -50%) scale(1); }
-  75% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -60%) scale(0.9); }
+@keyframes boKataCardSpring {
+  0% { opacity: 0; transform: scale(0.65) translateY(20px); }
+  15% { opacity: 1; transform: scale(1.04) translateY(0); }
+  25% { transform: scale(1) translateY(0); }
+  80% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.9) translateY(-15px); }
 }
 
-.bo-kata-title {
+.bo-kata-sparkles {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+  letter-spacing: 0.2em;
+  animation: sparkleBounce 0.8s ease infinite alternate;
+}
+
+@keyframes sparkleBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+
+.bo-kata-headline {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 6.5vw, 3.5rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, #FFF59D 0%, #FBBF24 50%, #F59E0B 100%);
+  font-size: clamp(2.4rem, 8vw, 3.2rem);
+  font-weight: 950;
+  line-height: 1;
+  margin-bottom: 12px;
+  white-space: nowrap !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF59D 30%, #FBBF24 70%, #F59E0B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 0.05em;
-  filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.9));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.9));
+  letter-spacing: 0.04em;
 }
 
-.bo-kata-sub {
-  font-size: 0.9375rem;
+.bo-kata-victim-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+  max-width: 100%;
+}
+
+.victim-kite-name {
+  font-size: 0.875rem;
   font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.victim-cut-tag {
+  font-size: 0.8125rem;
+  font-weight: 900;
   color: #34D399;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* Floating Wooden Charkhi Reel Widget */
