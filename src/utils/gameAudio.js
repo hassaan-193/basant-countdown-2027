@@ -124,6 +124,32 @@ class SoundController {
       // Audio fallback silent
     }
   }
+
+  // Sparkling whoosh sound when a new kite is launched at click/touch
+  playSpawn() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(640, now + 0.18);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.005, now + 0.18);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.18);
+    } catch {
+      // Audio fallback silent
+    }
+  }
 }
 
 export const soundFx = new SoundController();

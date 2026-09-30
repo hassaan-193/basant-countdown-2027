@@ -7,9 +7,10 @@
  */
 
 export const EVENT_CONFIG = {
-  // Target date for Basant 2027 (matching original project: March 11, 2027 11:59 PM PKT)
-  targetDateISO: "2027-03-11T23:59:00+05:00",
+  // Target date for Basant 2027 (Updated: January 29, 2027 to February 7, 2027 PKT)
+  targetDateISO: "2027-01-29T00:00:00+05:00",
   startDateISO: "2026-08-20T00:00:00+05:00",
+  endDateISO: "2027-02-07T23:59:59+05:00",
 
   title: "Basant 2027",
   subtitle: "The Historic Festival of Spring & Kite Flying",
@@ -17,8 +18,9 @@ export const EVENT_CONFIG = {
   location: "Ghaziabad, Lahore, Punjab, Pakistan",
   timezoneName: "Asia/Karachi (PKT UTC+5)",
   
-  displayDate: "Thursday, March 11, 2027",
-  displayTime: "11:59 PM PKT",
+  displayDate: "Friday, January 29, 2027",
+  displayDateRange: "January 29 – February 7, 2027",
+  displayTime: "12:00 AM PKT",
 
   // Videos collection: including new 2027 preparation video + preserved memory videos
   videos: [

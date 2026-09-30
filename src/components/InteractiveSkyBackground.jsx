@@ -114,6 +114,7 @@ export function InteractiveSkyBackground() {
       tail: [],
       tailFlutterPhase: Math.random() * 10,
       timeOffset: Math.random() * 100,
+      launchBoost: 0,
     };
 
     // Initialize fluttering ribbon tail
@@ -122,6 +123,77 @@ export function InteractiveSkyBackground() {
     }
 
     state.aiKites.push(kite);
+  }, []);
+
+  // Spawn a brand new kite directly where user touches or clicks on empty space
+  const spawnKiteAt = useCallback((x, y) => {
+    const state = gameState.current;
+    const preset = AUTHENTIC_KITES[Math.floor(Math.random() * AUTHENTIC_KITES.length)];
+    const toRight = Math.random() > 0.5;
+
+    // Prune excess uncut kites to keep performance silky smooth
+    const activeUncut = state.aiKites.filter((k) => !k.cut);
+    if (activeUncut.length >= 14) {
+      const oldest = activeUncut[0];
+      const idx = state.aiKites.indexOf(oldest);
+      if (idx !== -1) {
+        state.aiKites.splice(idx, 1);
+      }
+    }
+
+    const kite = {
+      id: "spawned-" + Math.random().toString(36).substring(7),
+      name: preset.name,
+      type: preset.type,
+      x: x,
+      y: y,
+      baseY: Math.max(60, y - 35),
+      targetX: Math.random() * state.width,
+      targetY: y - 35,
+      vx: (toRight ? 1 : -1) * (preset.speed * 0.95 + Math.random() * 0.6),
+      vy: -3.8 - Math.random() * 2.2, // upward initial lift into the wind
+      angle: toRight ? 0.12 : -0.12,
+      size: preset.size,
+      colorLeft: preset.colorLeft,
+      colorRight: preset.colorRight,
+      accentColor: preset.accentColor,
+      anchor: {
+        x: Math.max(40, Math.min(state.width - 40, x + (Math.random() - 0.5) * 160)),
+        y: state.height,
+      },
+      cut: false,
+      fallVx: (Math.random() - 0.5) * 2.8,
+      fallVy: 1.8,
+      fallRot: (Math.random() - 0.5) * 0.14,
+      tail: [],
+      tailFlutterPhase: Math.random() * 10,
+      timeOffset: Math.random() * 100,
+      launchBoost: 1.3, // Launch boost duration
+    };
+
+    // Initialize fluttering ribbon tail
+    for (let i = 0; i < 9; i++) {
+      kite.tail.push({ x: x, y: y + i * 8 });
+    }
+
+    state.aiKites.push(kite);
+
+    // Festive celebratory particle burst right at touch/click point
+    const burstColors = [preset.colorLeft, preset.colorRight, "#FDE047", "#FFFFFF", "#F59E0B"];
+    for (let i = 0; i < 18; i++) {
+      state.particles.push({
+        x: x,
+        y: y,
+        vx: (Math.random() - 0.5) * 8,
+        vy: (Math.random() - 0.5) * 8 - 2.5,
+        size: 3 + Math.random() * 3.5,
+        color: burstColors[Math.floor(Math.random() * burstColors.length)],
+        life: 1,
+        decay: 0.03 + Math.random() * 0.02,
+      });
+    }
+
+    soundFx.playSpawn();
   }, []);
 
   // Cut an AI kite & trigger Bo Kata celebration
@@ -240,10 +312,20 @@ export function InteractiveSkyBackground() {
           kite.fallVy += 0.045;
         } else {
           kite.timeOffset += dt;
-          kite.x += kite.vx;
-          kite.y = kite.baseY + Math.sin(kite.timeOffset * 1.5) * 16;
-          kite.angle = Math.sin(kite.timeOffset * 2) * 0.12 + (kite.vx / 10) * 0.08;
           kite.tailFlutterPhase += dt * 6;
+
+          if (kite.launchBoost && kite.launchBoost > 0) {
+            kite.launchBoost -= dt;
+            kite.x += kite.vx * 1.25;
+            kite.y += kite.vy;
+            kite.vy *= 0.95;
+            kite.baseY = kite.y;
+            kite.angle = (kite.vx / 10) * 0.15;
+          } else {
+            kite.x += kite.vx;
+            kite.y = kite.baseY + Math.sin(kite.timeOffset * 1.5) * 16;
+            kite.angle = Math.sin(kite.timeOffset * 2) * 0.12 + (kite.vx / 10) * 0.08;
+          }
 
           // Wrap edges
           if (kite.vx > 0 && kite.x > state.width + 60) {
@@ -489,32 +571,88 @@ export function InteractiveSkyBackground() {
     ctx.restore();
   };
 
-  // User input handler: moves the player kite to touch or mouse position
-  const handlePointer = (e) => {
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+  const lastTapRef = useRef({ time: 0, x: 0, y: 0 });
 
-    if (clientX !== undefined && clientY !== undefined) {
+  // Global Pointer & Touch interaction:
+  // Wherever user clicks or touches empty space anywhere on the page, spawn a new kite!
+  useEffect(() => {
+    const handleGlobalPointer = (e) => {
+      // 1. If clicking/touching interactive control or video player, don't spawn a kite
+      const target = e.target;
+      if (target && target.closest) {
+        const interactive = target.closest(
+          "button, a, input, select, textarea, video, audio, [role='button'], .floating-charkhi-widget, .video-player-frame, .controls-overlay, .control-btn, .tab-pill, .btn-hero-action, .sound-toggle-btn"
+        );
+        if (interactive) return;
+      }
+
+      // 2. Extract coordinates
+      let clientX, clientY;
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else if (e.clientX !== undefined) {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      if (clientX === undefined || clientY === undefined) return;
+
+      // 3. Debounce rapid duplicate touchstart + synthesized click events
+      const now = performance.now();
+      if (now - lastTapRef.current.time < 280) {
+        if (Math.hypot(clientX - lastTapRef.current.x, clientY - lastTapRef.current.y) < 40) {
+          return;
+        }
+      }
+      lastTapRef.current = { time: now, x: clientX, y: clientY };
+
+      // Move player kite target toward this point
       gameState.current.userKite.targetX = clientX;
       gameState.current.userKite.targetY = clientY;
-    }
-  };
 
-  // Tap in sky: checks if tapped near any AI kite to cut it!
-  const handleSkyTap = (e) => {
-    handlePointer(e);
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-
-    if (clientX !== undefined && clientY !== undefined) {
-      const target = gameState.current.aiKites.find(
-        (k) => !k.cut && Math.hypot(k.x - clientX, k.y - clientY) < 65
+      // 4. Check if tapped near an existing AI kite to cut it
+      const state = gameState.current;
+      const targetKite = state.aiKites.find(
+        (k) => !k.cut && Math.hypot(k.x - clientX, k.y - clientY) < 60
       );
-      if (target) {
-        cutKite(target);
+
+      if (targetKite) {
+        cutKite(targetKite);
+        return;
       }
-    }
-  };
+
+      // 5. Otherwise: user clicked or touched empty space! Launch a new kite right here!
+      spawnKiteAt(clientX, clientY);
+    };
+
+    const handlePointerMove = (e) => {
+      let clientX, clientY;
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else if (e.clientX !== undefined) {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      if (clientX !== undefined && clientY !== undefined) {
+        gameState.current.userKite.targetX = clientX;
+        gameState.current.userKite.targetY = clientY;
+      }
+    };
+
+    window.addEventListener("click", handleGlobalPointer);
+    window.addEventListener("touchstart", handleGlobalPointer, { passive: true });
+    window.addEventListener("mousemove", handlePointerMove, { passive: true });
+    window.addEventListener("touchmove", handlePointerMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("click", handleGlobalPointer);
+      window.removeEventListener("touchstart", handleGlobalPointer);
+      window.removeEventListener("mousemove", handlePointerMove);
+      window.removeEventListener("touchmove", handlePointerMove);
+    };
+  }, [cutKite, spawnKiteAt]);
 
   // Tap Charkhi widget: reels in string, launches new kite & sound
   const handleCharkhiTap = () => {
@@ -531,16 +669,14 @@ export function InteractiveSkyBackground() {
   };
 
   return (
-    <div
-      className="interactive-sky-root"
-      onMouseMove={handlePointer}
-      onTouchMove={handlePointer}
-      onClick={handleSkyTap}
-    >
+    <div className="interactive-sky-root">
       {/* Real Cinematic Lahore Rooftop Background Sky */}
       <div className="sky-real-backdrop">
         <div className="sky-photo-overlay"></div>
       </div>
+
+      {/* Live Interactive Canvas: renders all flying kites, strings, tails, & particles */}
+      <canvas ref={canvasRef} className="sky-canvas" />
 
       {/* "BO KATA!" Perfectly Centered Celebratory Modal */}
       {boKataToast && (

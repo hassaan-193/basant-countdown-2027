@@ -2,7 +2,7 @@
 
 A modern, high-performance, mobile-first web application celebrating the historic festival of spring on the rooftops of Lahore, Pakistan.
 
-Live countdown targeting **Thursday, March 11, 2027 • 11:59 PM PKT** (Asia/Karachi, UTC+5).
+Live countdown targeting **Friday, January 29 – Sunday, February 7, 2027** (Asia/Karachi, PKT UTC+5).
 
 ![Basant 2027](public/images/lahore-basant-real-sky.jpg)
 
@@ -10,19 +10,20 @@ Live countdown targeting **Thursday, March 11, 2027 • 11:59 PM PKT** (Asia/Kar
 
 ## 🌟 Key Features
 
-- **Live Precision Countdown**: Real-time ticker counting down Days, Hours, Minutes, and Seconds with progress percentage to Spring 2027.
+- **Live Precision Countdown**: Real-time ticker counting down Days, Hours, Minutes, and Seconds with progress percentage to January 29, 2027.
 - **Interactive 60 FPS Kite-Flying Sky (Pipa Combat style)**:
+  - **Touch & Click Anywhere to Launch Kites**: Tap or click any empty space on the screen to instantly spawn a new kite soaring into the sky with festive particle bursts and whoosh sound effects!
   - Authentic Lahori kite models (*Lahori Gudda, Do-Ranga Patang, Tukkal, Pari*).
   - Dynamic wind physics, catenary string simulation (*manjha/dor*), and ribbon tails.
   - Interactive player kite that follows pointer or touch across the sky.
   - String-cut collision detection (*Pecha*) triggering celebratory **"BO KATA!"** toasts and severed floating kites.
   - Interactive animated wooden *Charkhi* reel widget to instantly cut rival kites.
-- **Two Dedicated Video Showcase Sections**:
+- **Dedicated Video Showcase Sections**:
   1. **Basant 2027 Preparations**: Cinematic documentary showcasing bamboo crafting, glass-coated dor grinding, and rooftop anticipation.
   2. **Basant 2026 Memories**: 2-column gallery preserving classic celebration footage from the Walled City.
 - **Real Cinematic Visuals**: Authentic sunset rooftop photography of Lahore's Old City with Badshahi Mosque minarets.
-- **Cultural Audio**: Celebratory Basant bugle (*Bhopa*) & Bo-Kata sound effects using Web Audio API synthesis.
-- **Calendar Integration**: One-click "Add to Google Calendar" button with festival details and Lahore location.
+- **Cultural Audio**: Celebratory Basant bugle (*Bhopa*), kite launch whoosh, & Bo-Kata sound effects using Web Audio API synthesis.
+- **Calendar Integration**: One-click "Add to Google Calendar" button with festival details and Lahore location (Jan 29 - Feb 7, 2027).
 
 ---
 

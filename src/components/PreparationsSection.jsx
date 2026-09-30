@@ -203,33 +203,6 @@ export function PreparationsSection() {
             </div>
           </div>
         </div>
-
-        {/* 3-Column Craftsmanship Highlights */}
-        <div className="prep-features-grid">
-          <div className="prep-feature-card">
-            <div className="feature-num">01</div>
-            <h4 className="feature-heading">Bamboo Splints (Teela)</h4>
-            <p className="feature-text">
-              Master craftsmen carefully shave resilient Punjabi bamboo into aerodynamic splints calibrated for high-altitude spring winds.
-            </p>
-          </div>
-
-          <div className="prep-feature-card">
-            <div className="feature-num">02</div>
-            <h4 className="feature-heading">Festive Tissue Dyeworks</h4>
-            <p className="feature-text">
-              Ultra-lightweight sheets in signature Kesari yellow and vibrant contrast tones are cut and reinforced for stable flight.
-            </p>
-          </div>
-
-          <div className="prep-feature-card">
-            <div className="feature-num">03</div>
-            <h4 className="feature-heading">Charkhi &amp; Dor Winding</h4>
-            <p className="feature-text">
-              Traditional wooden spools (charkhis) are balanced and wound with fine thread, ready for rooftop battles under the Lahore sun.
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );

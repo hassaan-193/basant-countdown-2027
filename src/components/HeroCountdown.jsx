@@ -124,7 +124,7 @@ export function HeroCountdown() {
             <div className="progress-meta-row">
               <span>AUG 2026</span>
               <span className="progress-val-text">{progressPercent.toFixed(1)}% JOURNEY COMPLETED</span>
-              <span>MAR 2027</span>
+              <span>JAN 2027</span>
             </div>
             <div className="progress-groove">
               <div
@@ -141,7 +141,7 @@ export function HeroCountdown() {
         <div className="sky-interaction-callout">
           <span className="callout-icon">🪁</span>
           <span className="callout-text">
-            <strong>Interactive Sky:</strong> Move or tap anywhere in the sky above to fly your Patang, or tap the <strong>Charkhi</strong> reel to cut rival kites!
+            <strong>Interactive Sky:</strong> Click or tap anywhere on empty space to launch a new kite! Move your Patang to cut rival kites, or spin the <strong>Charkhi</strong>!
           </span>
         </div>
 
@@ -149,7 +149,7 @@ export function HeroCountdown() {
         <div className="hero-event-strip">
           <div className="event-strip-item">
             <span className="strip-icon">🗓️</span>
-            <span><strong>Target:</strong> Thursday, March 11, 2027 &bull; 11:59 PM PKT</span>
+            <span><strong>Festival Dates:</strong> Friday, Jan 29 &ndash; Feb 7, 2027 &bull; PKT</span>
           </div>
           <div className="strip-separator">&bull;</div>
           <div className="event-strip-item">
