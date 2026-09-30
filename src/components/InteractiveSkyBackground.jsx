@@ -75,17 +75,18 @@ export function InteractiveSkyBackground() {
     },
     aiKites: [],
     particles: [],
+    ripples: [],
     lastTime: performance.now(),
   });
 
-  // Spawn an authentic traditional kite in the background sky
+  // Spawn an authentic traditional rival kite from the edge of the sky
   const spawnKite = useCallback((customX, customY) => {
     const state = gameState.current;
     const preset = AUTHENTIC_KITES[Math.floor(Math.random() * AUTHENTIC_KITES.length)];
     const fromLeft = Math.random() > 0.5;
 
-    const x = customX !== undefined ? customX : (fromLeft ? -50 : state.width + 50);
-    const y = customY !== undefined ? customY : 70 + Math.random() * (state.height * 0.5);
+    const x = customX !== undefined ? customX : (fromLeft ? -60 : state.width + 60);
+    const y = customY !== undefined ? customY : 70 + Math.random() * (state.height * 0.45);
 
     const kite = {
       id: Math.random().toString(36).substring(7),
@@ -123,77 +124,6 @@ export function InteractiveSkyBackground() {
     }
 
     state.aiKites.push(kite);
-  }, []);
-
-  // Spawn a brand new kite directly where user touches or clicks on empty space
-  const spawnKiteAt = useCallback((x, y) => {
-    const state = gameState.current;
-    const preset = AUTHENTIC_KITES[Math.floor(Math.random() * AUTHENTIC_KITES.length)];
-    const toRight = Math.random() > 0.5;
-
-    // Prune excess uncut kites to keep performance silky smooth
-    const activeUncut = state.aiKites.filter((k) => !k.cut);
-    if (activeUncut.length >= 14) {
-      const oldest = activeUncut[0];
-      const idx = state.aiKites.indexOf(oldest);
-      if (idx !== -1) {
-        state.aiKites.splice(idx, 1);
-      }
-    }
-
-    const kite = {
-      id: "spawned-" + Math.random().toString(36).substring(7),
-      name: preset.name,
-      type: preset.type,
-      x: x,
-      y: y,
-      baseY: Math.max(60, y - 35),
-      targetX: Math.random() * state.width,
-      targetY: y - 35,
-      vx: (toRight ? 1 : -1) * (preset.speed * 0.95 + Math.random() * 0.6),
-      vy: -3.8 - Math.random() * 2.2, // upward initial lift into the wind
-      angle: toRight ? 0.12 : -0.12,
-      size: preset.size,
-      colorLeft: preset.colorLeft,
-      colorRight: preset.colorRight,
-      accentColor: preset.accentColor,
-      anchor: {
-        x: Math.max(40, Math.min(state.width - 40, x + (Math.random() - 0.5) * 160)),
-        y: state.height,
-      },
-      cut: false,
-      fallVx: (Math.random() - 0.5) * 2.8,
-      fallVy: 1.8,
-      fallRot: (Math.random() - 0.5) * 0.14,
-      tail: [],
-      tailFlutterPhase: Math.random() * 10,
-      timeOffset: Math.random() * 100,
-      launchBoost: 1.3, // Launch boost duration
-    };
-
-    // Initialize fluttering ribbon tail
-    for (let i = 0; i < 9; i++) {
-      kite.tail.push({ x: x, y: y + i * 8 });
-    }
-
-    state.aiKites.push(kite);
-
-    // Festive celebratory particle burst right at touch/click point
-    const burstColors = [preset.colorLeft, preset.colorRight, "#FDE047", "#FFFFFF", "#F59E0B"];
-    for (let i = 0; i < 18; i++) {
-      state.particles.push({
-        x: x,
-        y: y,
-        vx: (Math.random() - 0.5) * 8,
-        vy: (Math.random() - 0.5) * 8 - 2.5,
-        size: 3 + Math.random() * 3.5,
-        color: burstColors[Math.floor(Math.random() * burstColors.length)],
-        life: 1,
-        decay: 0.03 + Math.random() * 0.02,
-      });
-    }
-
-    soundFx.playSpawn();
   }, []);
 
   // Cut an AI kite & trigger Bo Kata celebration
@@ -277,17 +207,30 @@ export function InteractiveSkyBackground() {
       const dt = Math.min((currentTime - state.lastTime) / 1000, 0.1);
       state.lastTime = currentTime;
 
-      // 1. Update Player Kite
+      // 1. Update Player Kite with silky-smooth aerodynamic spring physics
       const u = state.userKite;
       const dx = u.targetX - u.x;
       const dy = u.targetY - u.y;
-      u.vx += (dx * 5 - u.vx) * 0.12;
-      u.vy += (dy * 5 - u.vy) * 0.12;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist > 1.5) {
+        const speedCap = Math.min(dist * 2.8, 340);
+        const targetVx = (dx / dist) * speedCap;
+        const targetVy = (dy / dist) * speedCap;
+        u.vx += (targetVx - u.vx) * Math.min(1, dt * 6.5);
+        u.vy += (targetVy - u.vy) * Math.min(1, dt * 6.5);
+      } else {
+        u.vx *= 0.88;
+        u.vy *= 0.88;
+      }
       u.x += u.vx * dt;
       u.y += u.vy * dt;
 
-      u.angle = (u.vx / 70) * 0.35 + Math.sin(currentTime * 0.002) * 0.08;
-      u.tailFlutterPhase += dt * 8;
+      // Realistic flight banking tilt: banks smoothly toward movement + gentle wind flutter
+      const flightTilt = (u.vx / 240) * 0.38;
+      const windFlutter = Math.sin(currentTime * 0.0025) * 0.07;
+      u.angle += (flightTilt + windFlutter - u.angle) * Math.min(1, dt * 7.5);
+      u.tailFlutterPhase += dt * 7.5;
 
       if (u.tail.length > 0) {
         u.tail[0] = { x: u.x, y: u.y + 16 };
@@ -371,6 +314,22 @@ export function InteractiveSkyBackground() {
 
       // 4. Render Canvas
       ctx.clearRect(0, 0, state.width, state.height);
+
+      // Draw Wind Ripples (golden rings where player commanded kite)
+      if (state.ripples && state.ripples.length > 0) {
+        state.ripples.forEach((r) => {
+          r.radius += dt * 45;
+          r.alpha -= dt * 1.5;
+          if (r.alpha > 0) {
+            ctx.beginPath();
+            ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(245, 158, 11, ${Math.max(0, r.alpha * 0.7)})`;
+            ctx.lineWidth = 1.8;
+            ctx.stroke();
+          }
+        });
+        state.ripples = state.ripples.filter((r) => r.alpha > 0);
+      }
 
       // Draw AI Strings (Fine glass dor with gentle glint)
       state.aiKites.forEach((kite) => {
@@ -571,13 +530,13 @@ export function InteractiveSkyBackground() {
     ctx.restore();
   };
 
-  const lastTapRef = useRef({ time: 0, x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
 
   // Global Pointer & Touch interaction:
-  // Wherever user clicks or touches empty space anywhere on the page, spawn a new kite!
+  // When user clicks or drags on empty space, steer the player's kite smoothly to that position!
   useEffect(() => {
-    const handleGlobalPointer = (e) => {
-      // 1. If clicking/touching interactive control or video player, don't spawn a kite
+    const handlePointerDown = (e) => {
+      // 1. If clicking/touching interactive control or video player, let user interact normally
       const target = e.target;
       if (target && target.closest) {
         const interactive = target.closest(
@@ -598,20 +557,25 @@ export function InteractiveSkyBackground() {
 
       if (clientX === undefined || clientY === undefined) return;
 
-      // 3. Debounce rapid duplicate touchstart + synthesized click events
-      const now = performance.now();
-      if (now - lastTapRef.current.time < 280) {
-        if (Math.hypot(clientX - lastTapRef.current.x, clientY - lastTapRef.current.y) < 40) {
-          return;
-        }
-      }
-      lastTapRef.current = { time: now, x: clientX, y: clientY };
+      isDraggingRef.current = true;
 
-      // Move player kite target toward this point
+      // Command player kite toward this position
       gameState.current.userKite.targetX = clientX;
       gameState.current.userKite.targetY = clientY;
 
-      // 4. Check if tapped near an existing AI kite to cut it
+      // Add gentle golden wind ripple at commanded location
+      if (!gameState.current.ripples) gameState.current.ripples = [];
+      gameState.current.ripples.push({
+        x: clientX,
+        y: clientY,
+        radius: 4,
+        alpha: 0.9,
+      });
+
+      // Subtle string tug sound
+      soundFx.playReel();
+
+      // Check if clicked directly on an existing rival kite to cut it!
       const state = gameState.current;
       const targetKite = state.aiKites.find(
         (k) => !k.cut && Math.hypot(k.x - clientX, k.y - clientY) < 60
@@ -619,14 +583,13 @@ export function InteractiveSkyBackground() {
 
       if (targetKite) {
         cutKite(targetKite);
-        return;
       }
-
-      // 5. Otherwise: user clicked or touched empty space! Launch a new kite right here!
-      spawnKiteAt(clientX, clientY);
     };
 
     const handlePointerMove = (e) => {
+      // Only guide kite if user is actively holding down / dragging on empty space
+      if (!isDraggingRef.current) return;
+
       let clientX, clientY;
       if (e.touches && e.touches.length > 0) {
         clientX = e.touches[0].clientX;
@@ -635,24 +598,29 @@ export function InteractiveSkyBackground() {
         clientX = e.clientX;
         clientY = e.clientY;
       }
+
       if (clientX !== undefined && clientY !== undefined) {
         gameState.current.userKite.targetX = clientX;
         gameState.current.userKite.targetY = clientY;
       }
     };
 
-    window.addEventListener("click", handleGlobalPointer);
-    window.addEventListener("touchstart", handleGlobalPointer, { passive: true });
-    window.addEventListener("mousemove", handlePointerMove, { passive: true });
-    window.addEventListener("touchmove", handlePointerMove, { passive: true });
+    const handlePointerUp = () => {
+      isDraggingRef.current = false;
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
 
     return () => {
-      window.removeEventListener("click", handleGlobalPointer);
-      window.removeEventListener("touchstart", handleGlobalPointer);
-      window.removeEventListener("mousemove", handlePointerMove);
-      window.removeEventListener("touchmove", handlePointerMove);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerUp);
     };
-  }, [cutKite, spawnKiteAt]);
+  }, [cutKite]);
 
   // Tap Charkhi widget: reels in string, launches new kite & sound
   const handleCharkhiTap = () => {

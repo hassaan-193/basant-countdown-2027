@@ -141,7 +141,7 @@ export function HeroCountdown() {
         <div className="sky-interaction-callout">
           <span className="callout-icon">🪁</span>
           <span className="callout-text">
-            <strong>Interactive Sky:</strong> Click or tap anywhere on empty space to launch a new kite! Move your Patang to cut rival kites, or spin the <strong>Charkhi</strong>!
+            <strong>Interactive Sky:</strong> Click or drag anywhere on empty space to steer your Patang across the sky! Intersect rival kites for a <strong>Bo Kata!</strong> victory, or spin the <strong>Charkhi</strong>!
           </span>
         </div>
 
