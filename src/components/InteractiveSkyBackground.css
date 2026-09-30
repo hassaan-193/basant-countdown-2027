@@ -168,7 +168,7 @@
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(251, 191, 36, 0.55);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.35);
-  cursor: pointer;
+  cursor: var(--cursor-kite-pointer);
   pointer-events: auto;
   z-index: 150;
   transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;

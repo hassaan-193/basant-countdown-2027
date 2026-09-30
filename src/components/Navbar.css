@@ -118,7 +118,7 @@
   color: #FBBF24;
   font-size: 0.8125rem;
   font-weight: 600;
-  cursor: pointer;
+  cursor: var(--cursor-kite-pointer);
   transition: all var(--transition-fast);
   white-space: nowrap;
   flex-shrink: 0;

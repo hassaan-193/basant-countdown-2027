@@ -117,8 +117,13 @@ button {
   background: none;
 }
 
-[role="button"], input, select, textarea {
-  cursor: var(--cursor-kite-pointer);
+[role="button"], input, select, textarea,
+.glow-countdown-card, .glow-countdown-card *,
+.countdown-glass-showcase, .countdown-grid,
+.btn-hero-action, .scroll-down-hint, .floating-charkhi-widget,
+.featured-video, .video-center-overlay, .memory-video-viewport,
+.sound-toggle-btn {
+  cursor: var(--cursor-kite-pointer) !important;
 }
 
 img, video {

@@ -42,7 +42,7 @@
   aspect-ratio: 16 / 9;
   background: #000;
   overflow: hidden;
-  cursor: pointer;
+  cursor: var(--cursor-kite-pointer);
 }
 
 .memory-video-el {
