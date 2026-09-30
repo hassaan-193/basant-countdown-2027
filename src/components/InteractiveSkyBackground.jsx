@@ -678,16 +678,17 @@ export function InteractiveSkyBackground() {
       {/* Live Interactive Canvas: renders all flying kites, strings, tails, & particles */}
       <canvas ref={canvasRef} className="sky-canvas" />
 
-      {/* "BO KATA!" Perfectly Centered Celebratory Modal */}
+      {/* "BO KATA!" Sleek Top Banner Notification */}
       {boKataToast && (
-        <div className="sky-bo-kata-overlay" key={boKataToast.id}>
-          <div className="sky-bo-kata-card">
-            <div className="bo-kata-sparkles">🎉 🪁 ✨</div>
-            <div className="bo-kata-headline">BO KATA!</div>
+        <div className="sky-bo-kata-banner-wrap" key={boKataToast.id}>
+          <div className="sky-bo-kata-top-banner">
+            <span className="bo-kata-banner-icon">🪁</span>
+            <span className="bo-kata-banner-headline">BO KATA!</span>
             <div className="bo-kata-victim-badge">
               <span className="victim-kite-name">{boKataToast.kiteName}</span>
               <span className="victim-cut-tag">CUT!</span>
             </div>
+            <span className="bo-kata-banner-sparkle">🎉</span>
           </div>
         </div>
       )}
