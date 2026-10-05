@@ -2,7 +2,7 @@
 
 A modern, high-performance, mobile-first web application celebrating the historic festival of spring on the rooftops of Lahore, Pakistan.
 
-Live countdown targeting **Friday, January 29 – Sunday, February 7, 2027** (Asia/Karachi, PKT UTC+5).
+Live countdown targeting **Tuesday, March 9, 2027** (Festival Dates: **March 12 – 14, 2027**, Asia/Karachi, PKT UTC+5).
 
 ![Basant 2027](public/images/lahore-basant-real-sky.jpg)
 
@@ -10,7 +10,7 @@ Live countdown targeting **Friday, January 29 – Sunday, February 7, 2027** (As
 
 ## 🌟 Key Features
 
-- **Live Precision Countdown**: Real-time ticker counting down Days, Hours, Minutes, and Seconds with progress percentage to January 29, 2027.
+- **Live Precision Countdown**: Real-time ticker counting down Days, Hours, Minutes, and Seconds with progress percentage to March 9, 2027.
 - **Interactive 60 FPS Kite-Flying Sky (Pipa Combat style)**:
   - **Touch & Click Anywhere to Launch Kites**: Tap or click any empty space on the screen to instantly spawn a new kite soaring into the sky with festive particle bursts and whoosh sound effects!
   - Authentic Lahori kite models (*Lahori Gudda, Do-Ranga Patang, Tukkal, Pari*).
@@ -23,7 +23,7 @@ Live countdown targeting **Friday, January 29 – Sunday, February 7, 2027** (As
   2. **Basant 2026 Memories**: 2-column gallery preserving classic celebration footage from the Walled City.
 - **Real Cinematic Visuals**: Authentic sunset rooftop photography of Lahore's Old City with Badshahi Mosque minarets.
 - **Cultural Audio**: Celebratory Basant bugle (*Bhopa*), kite launch whoosh, & Bo-Kata sound effects using Web Audio API synthesis.
-- **Calendar Integration**: One-click "Add to Google Calendar" button with festival details and Lahore location (Jan 29 - Feb 7, 2027).
+- **Calendar Integration**: One-click "Add to Google Calendar" button with festival details and Lahore location (March 12 - 14, 2027).
 
 ---
 

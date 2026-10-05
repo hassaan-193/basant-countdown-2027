@@ -124,7 +124,7 @@ export function HeroCountdown() {
             <div className="progress-meta-row">
               <span>AUG 2026</span>
               <span className="progress-val-text">{progressPercent.toFixed(1)}% JOURNEY COMPLETED</span>
-              <span>JAN 2027</span>
+              <span>MAR 2027</span>
             </div>
             <div className="progress-groove">
               <div
@@ -149,7 +149,12 @@ export function HeroCountdown() {
         <div className="hero-event-strip">
           <div className="event-strip-item">
             <span className="strip-icon">🗓️</span>
-            <span><strong>Festival Dates:</strong> Friday, Jan 29 &ndash; Feb 7, 2027 &bull; PKT</span>
+            <span><strong>Festival Dates:</strong> {EVENT_CONFIG.displayDateRange} &bull; PKT</span>
+          </div>
+          <div className="strip-separator">&bull;</div>
+          <div className="event-strip-item">
+            <span className="strip-icon">⏱️</span>
+            <span><strong>Timer Target:</strong> March 9, 2027</span>
           </div>
           <div className="strip-separator">&bull;</div>
           <div className="event-strip-item">

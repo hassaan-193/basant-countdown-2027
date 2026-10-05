@@ -44,7 +44,10 @@ export function Footer() {
           <div className="footer-links-col">
             <h4 className="footer-heading">Event Schedule</h4>
             <p className="footer-spec-item">
-              <strong>Target:</strong> {EVENT_CONFIG.displayDate}
+              <strong>Festival Dates:</strong> {EVENT_CONFIG.displayDateRange}
+            </p>
+            <p className="footer-spec-item">
+              <strong>Countdown Target:</strong> {EVENT_CONFIG.displayDate}
             </p>
             <p className="footer-spec-item">
               <strong>Time:</strong> {EVENT_CONFIG.displayTime}

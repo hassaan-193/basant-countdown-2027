@@ -9,11 +9,11 @@ export function addToGoogleCalendar() {
   );
   const location = encodeURIComponent("Ghaziabad, Lahore, Pakistan");
   
-  // Jan 29, 2027 00:00 PKT (UTC+5) is Jan 28, 2027 19:00:00 UTC
-  // Feb 7, 2027 23:59 PKT (UTC+5) is Feb 7, 2027 18:59:00 UTC
+  // March 12, 2027 00:00 PKT (UTC+5) is March 11, 2027 19:00:00 UTC
+  // March 14, 2027 23:59 PKT (UTC+5) is March 14, 2027 18:59:00 UTC
   // Format: YYYYMMDDTHHmmssZ
-  const startUTC = "20270128T190000Z";
-  const endUTC = "20270207T185900Z"; // Jan 29 to Feb 7, 2027 festival window
+  const startUTC = "20270311T190000Z";
+  const endUTC = "20270314T185900Z"; // March 12 to 14, 2027 festival window
 
   const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startUTC}/${endUTC}&details=${details}&location=${location}`;
   window.open(url, "_blank", "noopener,noreferrer");
@@ -26,11 +26,11 @@ export function downloadIcsFile() {
     "PRODID:-//Basant Festival Lahore//Basant 2027 Countdown//EN",
     "BEGIN:VEVENT",
     "UID:basant-2027-" + Date.now() + "@lahorebasant.org",
-    "DTSTAMP:20260928T080000Z",
-    "DTSTART:20270128T190000Z",
-    "DTEND:20270207T185900Z",
+    "DTSTAMP:20261005T080000Z",
+    "DTSTART:20270311T190000Z",
+    "DTEND:20270314T185900Z",
     "SUMMARY:Basant 2027 - Lahore Kite Flying Festival",
-    "DESCRIPTION:Annual Jashn-e-Basant festival celebrating the arrival of spring in Lahore, Pakistan (January 29 to February 7, 2027).",
+    "DESCRIPTION:Annual Jashn-e-Basant festival celebrating the arrival of spring in Lahore, Pakistan (March 12 to 14, 2027).",
     "LOCATION:Ghaziabad, Lahore, Punjab, Pakistan",
     "STATUS:CONFIRMED",
     "END:VEVENT",
